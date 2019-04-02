@@ -1,0 +1,57 @@
+buildscript {
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.5.19.RELEASE'
+	}
+}
+
+plugins {
+	id 'java'
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+
+apply from: 'build-utils/gradle_tasks/repositories.gradle'
+apply from: 'build-utils/gradle_tasks/expose_version.gradle'
+apply from: 'build-utils/gradle_tasks/increment_version.gradle'
+apply from: 'build-utils/gradle_tasks/build_dockerfile.gradle'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	compile 'org.json:json:20131018'
+	compile('org.springframework.boot:spring-boot-starter-data-rest')
+	compile('org.springframework.boot:spring-boot-starter-web')
+	//compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.13'
+	compile group: 'org.hibernate', name: 'hibernate-gradle-plugin', version: '5.2.10.Final'
+ 	compile 'org.hibernate:hibernate-c3p0:5.2.12.Final'	
+//	testCompile('org.springframework.boot:spring-boot-starter-test')	//compile 'org.json:json:20131018'	
+	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.7.0'
+	compile 'org.json:json:20131018'
+	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.7.0'	
+	compile group: 'com.amazonaws', name: 'aws-java-sdk', version: '1.11.521'
+	compile group: 'software.amazon.awssdk', name: 'protocol-core', version: '2.5.12'
+
+	
+}
+
+
+bootRun {
+    systemProperties = System.properties
+}
+
+tasks.withType(JavaCompile) {
+            options.compilerArgs << "-Xlint:deprecation"
+        }
